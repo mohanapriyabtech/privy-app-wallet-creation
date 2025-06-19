@@ -11,6 +11,8 @@ import userValidator from '../validators/user-validator';
 import resetPassword from '../controllers/user-management/reset-password';
 import logout from '../controllers/user-management/logout';
 import userAuthentication from '../authentication/user-authentication';
+import getBalance from '../controllers/user-management/get-balance';
+import buyToken from '../controllers/user-management/buy-token';
 
 
 const userRouter = express.Router();
@@ -30,5 +32,8 @@ userRouter.patch('/update/:id', [paramsValidator.validate, userValidator.update]
 userRouter.get('/details/:id', [userAuthentication.check, paramsValidator.validate], getUser.get);
 userRouter.patch('/reset-password/:id', [paramsValidator.validate], resetPassword.update);
 userRouter.delete('/logout', logout.delete);
+userRouter.get('/wallet-balance', getBalance.get);
+userRouter.post('/buy-transaction', buyToken.create);
+
 
 module.exports = userRouter;

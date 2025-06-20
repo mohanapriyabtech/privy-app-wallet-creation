@@ -13,6 +13,7 @@ import logout from '../controllers/user-management/logout';
 import userAuthentication from '../authentication/user-authentication';
 import getBalance from '../controllers/user-management/get-balance';
 import buyToken from '../controllers/user-management/buy-token';
+import getJilaiTokenBalance from '../controllers/user-management/get-jilai-token-balance';
 
 
 const userRouter = express.Router();
@@ -34,6 +35,6 @@ userRouter.patch('/reset-password/:id', [paramsValidator.validate], resetPasswor
 userRouter.delete('/logout', logout.delete);
 userRouter.get('/wallet-balance', getBalance.get);
 userRouter.post('/buy-transaction', buyToken.create);
-
+userRouter.get('/get-jilai-token-balance', getJilaiTokenBalance.get);
 
 module.exports = userRouter;

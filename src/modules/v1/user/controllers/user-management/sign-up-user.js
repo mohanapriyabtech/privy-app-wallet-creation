@@ -32,7 +32,7 @@ class SignupController {
                 password: hashedPassword,
                 is_being_affilate,
                 is_being_campaigner,
-                affilate_code: null,
+               // affilate_code: null,
             };
 
             if (is_being_affilate) {
@@ -51,6 +51,7 @@ class SignupController {
                     const walletDetails = await createWallet();
                     userPayload.wallet_address = [];
                     userPayload.wallet_address.push(walletDetails?.address);
+                    userPayload.wallet_id = walletDetails?.id
                 } catch (walletErr) {
                     return responseHandler.errorResponse(res, {}, "Wallet creation failed. Please try again later.", 500);
                 }

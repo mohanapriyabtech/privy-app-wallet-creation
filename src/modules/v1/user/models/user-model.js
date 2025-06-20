@@ -63,7 +63,7 @@ const UserSchema = new Schema({
     },
     affilate_code: {
         type: String,
-        unique: true
+        // unique: true
     },
     reference_affilate_code: {
         type: String
@@ -74,7 +74,7 @@ const UserSchema = new Schema({
     },
     campaigner_code: {
         type: String,
-        unique: true
+        // unique: true
     },
     usdt_raised: {
         type: Number,
@@ -127,6 +127,9 @@ const UserSchema = new Schema({
     document_uploaded: {
         type: Boolean,
         default: false
+    },
+    wallet_id: {
+        type: String
     },
     is_deleted: {
         type: Boolean,

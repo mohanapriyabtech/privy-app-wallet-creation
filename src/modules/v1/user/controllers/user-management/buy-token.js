@@ -18,57 +18,49 @@ class CreateBuyTransactionController {
     async create(req, res) {
 
         try {
-            
-                const wallet_id = req.query.wallet_id
-            
 
+            const wallet_id = req.query.wallet_id
 
-    const apiKey = process.env.PRIVY_API_KEY;       // your privy-app-id
-    const apiSecret = process.env.PRIVY_SECRET_KEY; // your privy-app-secret
+            const apiKey = process.env.PRIVY_API_KEY;       // your privy-app-id
+            const apiSecret = process.env.PRIVY_SECRET_KEY; // your privy-app-secret
 
-    // Encode Authorization
-    const authString = `${apiKey}:${apiSecret}`;
-    const encodedAuth = Buffer.from(authString).toString('base64');
-    const amountInEth = 0.1;
-     const valueInWei = (BigInt(Number(amountInEth) * 1e18)).toString();
+            // Encode Authorization
+            const authString = `${apiKey}:${apiSecret}`;
+            const encodedAuth = Buffer.from(authString).toString('base64');
+            const amountInEth = 0.1;
+            const valueInWei = (BigInt(Number(amountInEth) * 1e18)).toString();
+            console.log(valueInWei, "valueInWei")
 
-    // Define your transaction data
-    const requestBody = {
-      method: "eth_sendTransaction",
-      caip2: "eip155:11155111", // Sepolia testnet
-      chain_type: "ethereum",
-      params: {
-        transaction: {
-          to: "0x285568EDd848676Db31c14343dE177326506C021", // Replace with actual recipient
-          value: valueInWei // 0.001 ETH in wei
-        }
-      }
-    };
+            // Define your transaction data
+            const requestBody = {
+                method: "eth_sendTransaction",
+                caip2: "eip155:11155111", // Sepolia testnet
+                chain_type: "ethereum",
+                params: {
+                    transaction: {
+                        to: "0x285568EDd848676Db31c14343dE177326506C021", // Replace with actual recipient
+                        value: 1000000000000000,
+                        data: "0xd0febe4c"
+                    }
+                }
+            };
 
-    const response = await axios.post(
-      `https://api.privy.io/v1/wallets/${wallet_id}/rpc`,
-      requestBody,
-      {
-        headers: {
-          'Authorization': `Basic ${encodedAuth}`,
-          'Content-Type': 'application/json',
-          'privy-app-id': apiKey
-        }
-      }
-    );
+            const response = await axios.post(
+                `https://api.privy.io/v1/wallets/${wallet_id}/rpc`,
+                requestBody,
+                {
+                    headers: {
+                        'Authorization': `Basic ${encodedAuth}`,
+                        'Content-Type': 'application/json',
+                        'privy-app-id': apiKey
+                    }
+                }
+            );
 
-    console.log("✅ Transaction sent:", response.data);
+            console.log("✅ Transaction sent:", response.data);
 
+            return responseHandler.successResponse(res, response.data, "Transaction details retrived successfully", 200);
 
-
-
-
-            // const result = await checkWalletBalance(walletAddress);
-            // if(result){
-            //     return responseHandler.successResponse(res, result, "Wallet details retrived successfully", 200);
-            // } else{
-            //     return responseHandler.errorResponse(res, {}, "Wallet details not found", 400);
-            // }
         }
         catch (err) {
             console.error(err);
